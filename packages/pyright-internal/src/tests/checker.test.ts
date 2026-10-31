@@ -627,6 +627,18 @@ test('UninitializedVariable3', () => {
     TestUtils.validateResults(analysisResults, 0);
 });
 
+test('UninitializedVariable4', () => {
+    const configOptions = new ConfigOptions(Uri.empty());
+
+    // These errors are disabled by default.
+    let analysisResults = TestUtils.typeAnalyzeSampleFiles(['uninitializedVariable4.py'], configOptions);
+    TestUtils.validateResults(analysisResults, 0);
+
+    configOptions.diagnosticRuleSet.reportUninitializedInstanceVariable = 'error';
+    analysisResults = TestUtils.typeAnalyzeSampleFiles(['uninitializedVariable4.py'], configOptions);
+    TestUtils.validateResults(analysisResults, 2);
+});
+
 test('DeprecatedAlias1', () => {
     const configOptions = new ConfigOptions(Uri.empty());
 
